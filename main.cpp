@@ -1,64 +1,44 @@
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 #include "student.h"
-#define N 3
+
 int main(int argc, char* argv[]) 
 {
-  student s1,s2;
-  student a[N];
-  // Set age and set name for the first two ppl
-  int i,age;
-  string n;
-  // 1. Ask for N names and N age using cin
-  for(i=0;i<N;i++)
+ 
+  int n = (argc - 1) / 3;
+  student *pt_std = new student[n];
+  //./aout monkey 20 3.5 Art 15 2.5
+  for(int i = 0; i < n; i++, pt_std++)
   {
-    cout<<"What is your name? ";
-    cin>>n;
-    a[i].set_name(n);
-    cout<<"What is your age? ";
-    cin>>age;
-    a[i].set_age(age);
-  }
-  
-  //2. Print name and age of all N ppl
-  for(i=0;i<N;i++)
-  {
-    cout<<"Student "<<i+1<<endl;
-    //a[i].print_name();
-    //cout<<"age:"<<a[i].get_age()<<endl;
-    a[i].print_all();
-  //2.5 Create a print_all function to print all    
-  }
-  
-  //3. Print name and age of 
-  //the youngest person
-  //Find what the age of the youngest person
-  int young=a[0].get_age();
-  for(i=1;i<N;i++)
-  {
-      if(a[i].get_age()<young) young = a[i].get_age(); 
-  }
-  // Print all info for the yougest person
-  cout<<"Youngest people: "<<endl;
-  for(i=0;i<N;i++)
-  {
-      if(a[i].get_age()==young)
-        a[i].print_all();
-  }
-  //4. Change input from cin to argv
-  /*
-    s1.set_name("Pun"); s1.set_age(20); 
-		s2.set_name("Joe"); s2.set_age(17);
-    s1.get_age()>s2.get_age() ?	s1.print_name() :
- 	  s2.print_name();
- cout <<"is older";
-*/
-   
+    (*pt_std).set_age(argv[i * 3 + 1], atoi(argv[i * 3 + 2]), atof(argv[i * 3 + 3]));
+   }
+  pt_std -= n;
 
-    
+  float max_gpa = 0;
+  for(int i = 0; i < n; i++, pt_std++)
+  {
+    if(max_gpa < pt_std->get_gpa())
+    {
+      max_gpa = pt_std->get_gpa();
+    }
   }
+  pt_std -= n;
   
+  /*put them in 2 different loops*/
+  for(int i = 0; i < n; i++, pt_std++){  
+    if(pt_std->get_gpa() == max_gpa){
+      pt_std->print_all();
+    }
+  }  
+  pt_std -= n;
   
+  delete [] pt_std;
+  //name =oat
+  //age =21
+  //score=55
+  //print all info
 
 
+  }
